@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from base_template import initialize
 
 mask0 = np.ones((21,21))
 mask1 = np.ones((21,21))
@@ -29,31 +30,6 @@ for i in range(21):
         if ((i+j)%2 + (i*j)%3)%2 == 0:
             mask7[i,j] = 0
         
-def initialize(qr):
-    
-    qr[0:8,0:8] = 1
-    qr[0:8,-8:] = 1
-    qr[-8:,0:8] = 1
-
-    #set finder patterns
-    finder = np.zeros((7,7))
-    finder[1:6,1:6] = 1
-    finder[2:5,2:5] = 0
-    qr[0:7,0:7] = finder
-    qr[0:7,-7:] = finder
-    qr[-7:,0:7] = finder
-
-    #set timing patterns
-    qr[6,7:14] = 1
-    qr[7:14,6] = 1
-    qr[6,8] = 0
-    qr[8,6] = 0
-    qr[6,10] = 0
-    qr[10,6] = 0
-    qr[6,12] = 0
-    qr[12,6] = 0
-
-
 
 for mask in [mask0, mask1, mask2, mask3, mask4, mask5, mask6, mask7]:
     initialize(mask)
@@ -78,8 +54,3 @@ plt.imshow(mask6, cmap='gray', interpolation='nearest')
 plt.subplot(248)
 plt.imshow(mask7, cmap='gray', interpolation='nearest')
 plt.show()
-
-#show test  
-plt.imshow(test, cmap='gray', interpolation='nearest')
-plt.show()
-
