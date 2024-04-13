@@ -1,0 +1,26 @@
+import re
+
+# Define regular expressions for different encoding modes
+NUMERIC_RE = re.compile(r"^\d*$")
+ALPHANUMERIC_RE = re.compile(r"^[0-9A-Z $%*+\-./:]*$")
+BYTE_RE = re.compile(r"^[\x00-\xff]*$")
+KANJI_RE = re.compile(r"^[\u4E00-\u9FFF\u3040-\u309F\u30A0-\u30FF]*$")
+
+def get_qr_encoding_mode_and_validate_length(user_input):
+    # Check for numeric
+    if NUMERIC_RE.fullmatch(user_input):
+        return 0b0001, "Numeric"
+
+    # Check for alphanumeric
+    elif ALPHANUMERIC_RE.fullmatch(user_input):
+        return 0b0010, "Alphanumeric"
+
+    # Check for Kanji
+    elif KANJI_RE.fullmatch(user_input):
+        return 0b0100, "Kanji"
+
+    # Check for byte mode
+    elif BYTE_RE.fullmatch(user_input):
+        return 0b1000, "Byte"
+
+    return 0b0111, "Not a Valid Input"
